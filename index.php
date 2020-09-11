@@ -44,7 +44,6 @@
 </table>
 </p>
     </article>
-                    <hr />
                 <?php endforeach; ?>
             </div> <!-- #contenu -->
             <footer id="pied">
