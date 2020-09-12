@@ -1,7 +1,6 @@
 <?php
 
-require_once 'Modele/Modele.php';
-
+require_once 'Framework/Modele.php';
 /**
  *  
  * 
@@ -36,4 +35,18 @@ class Voiture extends Modele {
             throw new Exception("Aucun voiture ne correspond à l'identifiant '$id'");
     }
 
+}
+
+    /**
+     * Renvoie le nombre total de voitures
+     * 
+     * @return int Le nombre de voitures
+     */
+    public function getNombreVoitures()
+    {
+        $sql = 'select count(*) as nbVoitures from vehicules';
+        $resultat = $this->executerRequete($sql);
+        $ligne = $resultat->fetch();  // Le résultat comporte toujours 1 ligne
+        return $ligne['nbVoitures'];
+    }
 }
