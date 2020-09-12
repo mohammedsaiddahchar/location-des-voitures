@@ -1,6 +1,6 @@
-<?php $titre = 'CarLocation'; ?>
+<?php $this->titre = 'CarLocation'; ?>
 
-<?php ob_start(); ?>
+
 <?php foreach ($voitures as $voiture): ?>
     <article>
         <header>
@@ -29,6 +29,4 @@
     </article>
     <hr />
 <?php endforeach; ?>
-<?php $contenu = ob_get_clean(); ?>
 
-<?php require 'gabarit.php'; ?>
