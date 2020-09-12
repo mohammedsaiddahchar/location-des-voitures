@@ -1,30 +1,48 @@
 <?php
 
-// Renvoie la liste des voitures
-function getVoitures() {
-    $bdd = getBdd();
-    $voitures = $bdd->query('select * from vehicules'
-            . ' order by id desc');
-    return $voitures;
-}
+/**
+ * Classe abstraite Modèle.
+ * Centralise les services d'accès à une base de données.
+ * Utilise l'API PDO
+ *
+ * @author Dahchar Mohammed Said
+ */
+abstract class Modele {
 
-// Renvoie les informations sur une voiture
-function getVoiture($id) {
-    $bdd = getBdd();
-    $voiture = $bdd->prepare('select * from vehicule'
-            . ' where id=?');
-    $voiture->execute(array($id));
-    if ($voiture->rowCount() > 0)
-        return $voiture->fetch();  // Accès à la première ligne de résultat
-    else
-        throw new Exception("Aucun voiture ne correspond à l'identifiant '$id'");
-}
+    /** Objet PDO d'accès à la BD */
+    private $bdd;
 
+    /**
+     * Exécute une requête SQL éventuellement paramétrée
+     * 
+     * @param string $sql La requête SQL
+     * @param array $valeurs Les valeurs associées à la requête
+     * @return PDOStatement Le résultat renvoyé par la requête
+     */
+    protected function executerRequete($sql, $params = null) {
+        if ($params == null) {
+            $resultat = $this->getBdd()->query($sql); // exécution directe
+        }
+        else {
+            $resultat = $this->getBdd()->prepare($sql);  // requête préparée
+            $resultat->execute($params);
+        }
+        return $resultat;
+    }
 
-// Effectue la connexion à la BDD
-// Instancie et renvoie l'objet PDO associé
-function getBdd() {
-    $bdd = new PDO('mysql:host=localhost;dbname=location_vehicule;charset=utf8', 'root',
-            '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    return $bdd;
+    /**
+     * Renvoie un objet de connexion à la BD en initialisant la connexion au besoin
+     * 
+     * @return PDO L'objet PDO de connexion à la BDD
+     */
+    private function getBdd() {
+        if ($this->bdd == null) {
+            // Création de la connexion
+            $this->bdd = new PDO('mysql:host=localhost;dbname=location_vehicule;charset=utf8',
+                    'root', '',
+                    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        }
+        return $this->bdd;
+    }
+
 }
