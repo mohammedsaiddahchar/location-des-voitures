@@ -1,6 +1,6 @@
-<?php $titre = "CarLocation - " . $voiture['id']; ?>
+<?php $this->titre = "CarLocation - " . $voiture['id']; ?>
 
-<?php ob_start(); ?>
+
 <article>
     <header>
         <h1 class="titre"><?= $voiture['marque'] ?></h1>
@@ -33,7 +33,4 @@
 </table>
 </p>
     </article>
-<?php endforeach; ?>
-<?php $contenu = ob_get_clean(); ?>
 
-<?php require 'gabarit.php'; ?>
