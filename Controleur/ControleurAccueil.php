@@ -1,9 +1,9 @@
 <?php
 
+require_once 'Framework/Controleur.php';
 require_once 'Modele/Voiture.php';
-require_once 'Vue/Vue.php';
 
-class ControleurAccueil {
+class ControleurAccueil extends Controleur {
 
     private $voiture;
 
@@ -11,11 +11,10 @@ class ControleurAccueil {
         $this->voiture = new Voiture();
     }
 
-// Affiche la liste de tous les voitures
-    public function accueil() {
-        $voitures = $this->voiture->getVoitures();
-        $vue = new Vue("Accueil");
-        $vue->generer(array('voitures' => $voitures));
+    // Affiche la liste de tous les voitures
+    public function index() {
+        voitures = $this->voiture->getVoitures();
+        $this->genererVue(array('voitures' => voitures));
     }
 
 }
